@@ -7,12 +7,13 @@ from bokeh.models import ColumnDataSource, DataTable, TableColumn, HoverTool
 from bokeh.layouts import column
 from bokeh.models.widgets import Tabs, Panel, FileInput
 from functions_ import *
+import joblib
 
 df = pd.DataFrame()
 source = ColumnDataSource(df)
 columns = [TableColumn(field=col, title=col) for col in df.columns]
 
-file_input = FileInput(accept='.csv, .json', width=1600)
+file_input = FileInput(accept='.csv, .json, .pkl', width=1600)
 
 # Specify the selection tools to be made available
 hover = HoverTool(tooltips=[('Line', '$name')])
@@ -114,7 +115,10 @@ def upload_data1(attr, old, new):
 	#data = json.load(f)
 	#js_df = json_to_biomechanics(data)
 	#df = create_dataset(js_df)
-	df = pd.read_csv(f)
+	data = joblib.load(f)
+	smpl_df = joints_from_smpl(data)
+	df = create_dataset_SMPL(smpl_df)
+	#df = pd.read_csv(f)
 	df.index.rename('Frame')
 	df['index'] = df.index
 	df = df[['index'] + [col for col in df.columns if col != 'index']]
