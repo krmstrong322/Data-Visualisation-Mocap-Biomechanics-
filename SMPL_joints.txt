@@ -1,0 +1,50 @@
+        'OP Nose',        # 0,1,2
+        'OP Neck',        # 3,4,5
+        'OP RShoulder',   # 6,7,8
+        'OP RElbow',      # 9,10,11
+        'OP RWrist',      # 12,13,14
+        'OP LShoulder',   # 15,16,17
+        'OP LElbow',      # 18,19,20
+        'OP LWrist',      # 21,22,23
+        'OP MidHip',      # 24,25,26
+        'OP RHip',        # 27,28,29
+        'OP RKnee',       # 30,31,32
+        'OP RAnkle',      # 33,34,35
+        'OP LHip',        # 36,37,38
+        'OP LKnee',       # 39,40,41
+        'OP LAnkle',      # 42,43,44
+        'OP REye',        # 45,46,47
+        'OP LEye',        # 48,49,50
+        'OP REar',        # 51,52,53
+        'OP LEar',        # 54,55,56
+        'OP LBigToe',     # 57,58,59
+        'OP LSmallToe',   # 60,61,62
+        'OP LHeel',       # 63,64,65
+        'OP RBigToe',     # 66,67,68
+        'OP RSmallToe',   # 69,70,71
+        'OP RHeel',       # 72,73,74
+        'rankle',         # 75,76,77
+        'rknee',          # 78,79,80
+        'rhip',           # 81,82,83
+        'lhip',           # 84,85,86
+        'lknee',          # 87,88,89
+        'lankle',         # 90,91,92
+        'rwrist',         # 93,94,95
+        'relbow',         # 96,97,98
+        'rshoulder',      # 99,100,101
+        'lshoulder',      # 102,103,104
+        'lelbow',         # 105,106,107
+        'lwrist',         # 108,109,110
+        'neck',           # 111,112,113
+        'headtop',        # 114,115,116
+        'hip',            # 117,118,119 'Pelvis (MPII)', # 39
+        'thorax',         # 120,121,122 'Thorax (MPII)', # 40
+        'Spine (H36M)',   # 123,124,125
+        'Jaw (H36M)',     # 126,127,128
+        'Head (H36M)',    # 129,130,131
+        'nose',           # 132,133,134
+        'leye',           # 135,136,137 'Left Eye', # 45
+        'reye',           # 138,139,140 'Right Eye', # 46
+        'lear',           # 141,142,143 'Left Ear', # 47
+        'rear',           # 144,145,146 'Right Ear', # 48
+    ]
