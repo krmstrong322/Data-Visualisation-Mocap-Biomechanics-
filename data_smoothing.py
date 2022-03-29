@@ -6,15 +6,21 @@ def get_input(input_file):
 	return input_file
 
 
-def complex_smoothing(input_file):
-	df = input_file
-	complex_df = df
+def complex_smoothing(input_file, type, window):
+	complex_df = input_file
+	if type == "filter" or type == "Filter":
+		for i in complex_df:
+			complex_df[i] = savgol_filter(complex_df[i], window, 2)
+	elif type == "rolling" or type == "Rolling":
+		for i in complex_df:
+			complex_df[i].rolling(window).mean()
 	return complex_df
 
 
-def simple_smoothing(input_file):
-	df = input_file
-	simple_df = df
+def simple_smoothing(input_file, magnitude):
+	simple_df = input_file
+	for i in simple_df:
+		simple_df[i] = simple_df[i][::magnitude]
 	return simple_df
 
 
@@ -25,8 +31,8 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 	path = args.filename
 	if args.smoothing == "simple" or args.smoothing == "Simple":
-		simple_smoothing(get_input(path)).to_csv("simple_smoothing.csv")
+		simple_smoothing(get_input(path), 2).to_csv("simple_smoothing.csv")
 	elif args.smoothing == "complex" or args.smoothing == "Complex":
-		complex_smoothing(get_input(path)).to_csv("complex_smoothing.csv")
+		complex_smoothing(get_input(path), "rolling", 5).to_csv("complex_smoothing.csv")
 	else:
 		print("Smoothing selection not a valid choice")
