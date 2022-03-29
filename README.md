@@ -1,10 +1,10 @@
 # Data-Visualisation-Mocap-Biomechanics-
 
-##How to install:
+## How to install:
 ```
 pip install requirements.txt
 ```
-##How to use data dashboard:
+## How to use data dashboard:
 
 If the data source is .json: 
 ```
@@ -15,12 +15,12 @@ If the data source is .pkl:
 bokeh serve --show datadashboard_smpl.py
 ```
 
-##How to use biomechanics calculator
+## How to use biomechanics calculator
 ```
 python calculate_.py -i [FILE PATH]
 ```
 
-##How to use data smoothing
+## How to use data smoothing
 ```
 python data_smoothing.py -i [FILE PATH], -s [SMOOTHING TYPE], -m [SMOOTHING METHOD]
 ```
