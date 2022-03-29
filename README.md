@@ -15,6 +15,8 @@ If the data source is .pkl:
 bokeh serve --show datadashboard_smpl.py
 ```
 
+Once the data dashboard is running, simply select the file you wish to display
+
 ## How to use biomechanics calculator
 ```
 python calculate_.py -i [FILE PATH]
