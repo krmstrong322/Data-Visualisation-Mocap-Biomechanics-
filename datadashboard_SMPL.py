@@ -1,4 +1,3 @@
-import pandas as pd
 import io
 import base64
 from bokeh.io import curdoc

@@ -4,7 +4,6 @@ from argparse import ArgumentParser
 import joblib  # you may use native pickle here as well
 import pandas as pd
 import numpy as np
-import itertools
 import more_itertools
 import json
 
@@ -30,18 +29,7 @@ rename_dict_OP = {6: 'shoulder_r_x', 7: 'shoulder_r_y', 8: 'shoulder_r_z',
                   39: 'knee_l_x',40: 'knee_l_y',41: 'knee_l_z',
                   42: 'ankle_l_x',43: 'ankle_l_y',44: 'ankle_l_z',
                   }
-"""
-def joints_from_smpl(input):
-	data = input
-	joints = data[1]['joints3d']
-	lists = {}
-	for i in range(len(joints)):
-		lists[i] = list(more_itertools.collapse(joints[i]))
-	df = pd.DataFrame(lists)
-	df.reset_index(drop=True, inplace=True)
-	df_transposed = df.T
-	return df_transposed #output the transposed joints from SMPL in the desired file format
-"""
+
 def joints_from_smpl(input):
 	data = input
 	joints = data[1]['joints3d']
@@ -53,10 +41,6 @@ def joints_from_smpl(input):
 	df_transposed = df.T
 	df_transposed.rename(columns=rename_dict_OP, inplace=True)
 	return df_transposed
-
-#output = joblib.load(r'C:\Users\Kai Armstrong\Desktop\DTP-KNEE-main\PKL\sit.pkl')
-
-#print(joints_from_smpl(output))
 
 def json_to_biomechanics(data):
 	bone_list = []
@@ -95,7 +79,6 @@ if __name__ == "__main__":
 			df_pos = json_to_biomechanics(data)
 			df_pos.to_csv("dataframe.csv")
 			biomechanics = create_dataset(df_pos) #calculate biomechanics from joint positions
-			#print(biomechanics)
 			biomechanics.to_csv((str(args.filename) + ".csv"), index=False)
 			print("done")
 
@@ -104,29 +87,3 @@ if __name__ == "__main__":
 		biomechanics.to_csv((str(args.filename) + ".csv"), index=False)
 		print("done")
 
-# data = pd.read_csv("nokneekg_fast_2_master.csv")
-
-
-"""
-biomechanics = create_dataset(data)
-print(biomechanics.head())
-biomechanics.to_csv("nokneekg_fast_master_biomechanics.csv", index=False)
-print("done")
-"""
-"""
-data = json.load(file)
-			bone_list = []
-			bodies = []
-			positions = []
-			data = pd.read_csv(file_input)
-			bone_list.append(data['bone_list']) #extract the list of bones from json file (joint hierarchy)
-			for i in data['frames']:
-				bodies.append(i['bodies'])
-			for i in range(len(bodies)):
-				positions.append(bodies[i][0]['joint_positions']) #extract the positions of joints based for all time points
-			df_pos = pd.DataFrame(positions)
-			df_pos.to_csv('position.csv', index=False)
-			biomechanics = create_dataset(df_pos) #calculate biomechanics from joint positions
-			biomechanics.to_csv("nokneekg_fast_master_biomechanics.csv", index=False)
-			print("done")
-"""

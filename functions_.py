@@ -265,8 +265,6 @@ def calculate_shoulder_angle(data, frame):
 	sr_sc = distance.euclidean(shoulder_r, spine_chest) #right shoulder to spine chest
 	sl_sc = distance.euclidean(shoulder_l, spine_chest) #left shoulder to spine chest
 	n_sc = distance.euclidean(neck, spine_chest) #neck to spine chest
-	#left_shoulder_angle = None #create empty variable
-	#right_shoulder_angle = None #create empty variable
 	shoulder_angle = None
 	shoulder_angle_right = math.degrees(math.acos((n_sr ** 2 + n_sc ** 2 - sr_sc ** 2)/(2 * n_sr * n_sc)))
 	shoulder_angle_left = math.degrees(math.acos((n_sl ** 2 + n_sc ** 2 - sl_sc ** 2)/(2 * n_sl * n_sc)))
@@ -292,8 +290,6 @@ def calculate_shoulder_angle_SMPL(data, frame):
 	sr_sc = distance.euclidean(shoulder_r, spine_chest) #right shoulder to spine chest
 	sl_sc = distance.euclidean(shoulder_l, spine_chest) #left shoulder to spine chest
 	n_sc = distance.euclidean(neck, spine_chest) #neck to spine chest
-	#left_shoulder_angle = None #create empty variable
-	#right_shoulder_angle = None #create empty variable
 	shoulder_angle = None
 	shoulder_angle_right = math.degrees(math.acos((n_sr ** 2 + n_sc ** 2 - sr_sc ** 2)/(2 * n_sr * n_sc)))
 	shoulder_angle_left = math.degrees(math.acos((n_sl ** 2 + n_sc ** 2 - sl_sc ** 2)/(2 * n_sl * n_sc)))
