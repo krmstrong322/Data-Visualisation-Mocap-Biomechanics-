@@ -1,6 +1,4 @@
 import math
-import statistics
-import json
 import numpy as np
 from scipy.spatial import distance
 import pandas as pd
@@ -23,6 +21,13 @@ b_index =    ["pelvis_x","pelvis_y","pelvis_z","spine_naval_x","spine_naval_y","
               "eye_r_x","eye_r_y","eye_r_z","ear_r_x","ear_r_y","ear_r_z"]
 
 body_index_SMPL = list(range(146))
+
+def validate_file(f):
+	if not os.path.exists(f):
+		# Argparse uses the ArgumentTypeError to give a rejection message like:
+		# error: argument input: x does not exist
+		raise argparse.ArgumentTypeError("{0} does not exist".format(f))
+	return f
 
 def json_to_biomechanics(data):
 	bone_list = []
