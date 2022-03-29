@@ -20,7 +20,7 @@ hover = HoverTool(tooltips=[('Line', '$name')])
 select_tools = ['box_select', 'lasso_select', 'poly_select', 'tap', 'pan', 'wheel_zoom', 'undo', 'save', 'reset', hover]
 
 # Create Figures
-KneeFig = figure(  # x_axis_type='datetime',
+KneeFig = figure(
 	title='Knee Flexion',
 	plot_height=800, plot_width=1600,
 	x_axis_label='Frame',
@@ -28,7 +28,7 @@ KneeFig = figure(  # x_axis_type='datetime',
 	toolbar_location='below',
 	tools=select_tools)
 
-KneeVVFig = figure(  # x_axis_type='datetime',
+KneeVVFig = figure(
 	title='Knee Varus/Valgus',
 	plot_height=800, plot_width=1600,
 	x_axis_label='Frame',
@@ -36,7 +36,7 @@ KneeVVFig = figure(  # x_axis_type='datetime',
 	toolbar_location='below',
 	tools=select_tools)
 
-HipFig = figure(  # x_axis_type='datetime',
+HipFig = figure(
 	title='Hip Abduction',
 	plot_height=800, plot_width=1600,
 	x_axis_label='Frame',
@@ -44,7 +44,7 @@ HipFig = figure(  # x_axis_type='datetime',
 	toolbar_location='below',
 	tools=select_tools)
 
-ElbowFig = figure(  # x_axis_type='datetime',
+ElbowFig = figure(
 	title='Elbow Flexion',
 	plot_height=800, plot_width=1600,
 	x_axis_label='Frame',
@@ -52,7 +52,7 @@ ElbowFig = figure(  # x_axis_type='datetime',
 	toolbar_location='below',
 	tools=select_tools)
 
-ArmFig = figure(  # x_axis_type='datetime',
+ArmFig = figure(
 	title='Arm Abduction',
 	plot_height=800, plot_width=1600,
 	x_axis_label='Frame',
@@ -60,7 +60,7 @@ ArmFig = figure(  # x_axis_type='datetime',
 	toolbar_location='below',
 	tools=select_tools)
 
-HeadAngleFig = figure(  # x_axis_type='datetime',
+HeadAngleFig = figure(
 	title='Head Tilt',
 	plot_height=800, plot_width=1600,
 	x_axis_label='Frame',
@@ -68,7 +68,7 @@ HeadAngleFig = figure(  # x_axis_type='datetime',
 	toolbar_location='below',
 	tools=select_tools)
 
-ShoulderAngleFig = figure(  # x_axis_type='datetime',
+ShoulderAngleFig = figure(
 	title='Shoulder Tilt',
 	plot_height=800, plot_width=1600,
 	x_axis_label='Frame',
@@ -76,7 +76,7 @@ ShoulderAngleFig = figure(  # x_axis_type='datetime',
 	toolbar_location='below',
 	tools=select_tools)
 
-SpineArcFig = figure(  # x_axis_type='datetime',
+SpineArcFig = figure(
 	title='Spine Arc',
 	plot_height=800, plot_width=1600,
 	x_axis_label='Frame',
@@ -84,7 +84,7 @@ SpineArcFig = figure(  # x_axis_type='datetime',
 	toolbar_location='below',
 	tools=select_tools)
 
-PelvisFlexFig = figure(  # x_axis_type='datetime',
+PelvisFlexFig = figure(
 	title='Pelvis Flexion',
 	plot_height=800, plot_width=1600,
 	x_axis_label='Frame',
@@ -112,47 +112,43 @@ tabs = Tabs(tabs=[KneePanel, VarusValgusPanel, HipPanel, ElbowPanel,
 def upload_data1(attr, old, new):
 	decoded = base64.b64decode(new)
 	f = io.BytesIO(decoded)
-	#data = json.load(f)
-	#js_df = json_to_biomechanics(data)
-	#df = create_dataset(js_df)
 	data = joblib.load(f)
 	smpl_df = joints_from_smpl(data)
 	df = create_dataset_SMPL(smpl_df)
-	#df = pd.read_csv(f)
 	df.index.rename('Frame')
 	df['index'] = df.index
 	df = df[['index'] + [col for col in df.columns if col != 'index']]
 	source.data = df
 	data_table.columns = [TableColumn(field=col, title=col) for col in df.columns]
 	KneeFig.line(x='index', y='left_knee_flexion',
-	             color='#CE1141', legend_label='Left',
+	             color='#006BB6', legend_label='Left',
 	             source=source, muted_alpha=0.1, name='left_knee_flexion')
 	KneeFig.line(x='index', y='right_knee_flexion',
-	             color='#006BB6', legend_label='Right',
+	             color='#CE1141', legend_label='Right',
 	             source=source, muted_alpha=0.1, name='right_knee_flexion')
 	KneeVVFig.line(x='index', y='left_knee_varus',
-	               color='#CE1141', legend_label='Left',
+	               color='#006BB6', legend_label='Left',
 	               source=source, muted_alpha=0.1, name='left_knee_varus')
 	KneeVVFig.line(x='index', y='right_knee_varus',
-	               color='#006BB6', legend_label='Right',
+	               color='#CE1141', legend_label='Right',
 	               source=source, muted_alpha=0.1, name='right_knee_varus')
 	HipFig.line(x='index', y='left_hip_abduction',
-	            color='#CE1141', legend_label='Left',
+	            color='#006BB6', legend_label='Left',
 	            source=source, muted_alpha=0.1, name='left_hip_abduction')
 	HipFig.line(x='index', y='right_hip_abduction',
-	            color='#006BB6', legend_label='Right',
+	            color='#CE1141', legend_label='Right',
 	            source=source, muted_alpha=0.1, name='right_hip_abduction')
 	ElbowFig.line(x='index', y='left_elbow_flexion',
-	              color='#CE1141', legend_label='Left',
+	              color='#006BB6', legend_label='Left',
 	              source=source, muted_alpha=0.1, name='left_elbow_flexion')
 	ElbowFig.line(x='index', y='right_elbow_flexion',
-	              color='#006BB6', legend_label='Right',
+	              color='#CE1141', legend_label='Right',
 	              source=source, muted_alpha=0.1, name='right_elbow_flexion')
 	ArmFig.line(x='index', y='left_arm_abduction',
-	            color='#CE1141', legend_label='Left',
+	            color='#006BB6', legend_label='Left',
 	            source=source, muted_alpha=0.1, name='left_arm_abduction')
 	ArmFig.line(x='index', y='right_arm_abduction',
-	            color='#006BB6', legend_label='Right',
+	            color='#CE1141', legend_label='Right',
 	            source=source, muted_alpha=0.1, name='right_arm_abduction')
 	HeadAngleFig.line(x='index', y='head_angle_new',
 	                  color='#CE1141', legend_label='Head Angle',
@@ -160,7 +156,6 @@ def upload_data1(attr, old, new):
 	ShoulderAngleFig.line(x='index', y='shoulder_angle_new',
 	                      color='#CE1141', legend_label='Shoulder Angle',
 	                      source=source, muted_alpha=0.1, name='shoulder_angle_new')
-
 	SpineArcFig.line(x='index', y='spine_arc',
 	                 color='#CE1141', legend_label='Spine Arc',
 	                 source=source, muted_alpha=0.1, name='spine_arc')
