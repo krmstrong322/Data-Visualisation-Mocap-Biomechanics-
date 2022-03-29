@@ -6,12 +6,12 @@ def get_input(input_file):
 	return input_file
 
 
-def complex_smoothing(input_file, type, window):
+def complex_smoothing(input_file, smoothing_method, window):
 	complex_df = input_file
-	if type == "filter" or type == "Filter":
+	if smoothing_method == "filter" or smoothing_method == "Filter":
 		for i in complex_df:
 			complex_df[i] = savgol_filter(complex_df[i], window, 2)
-	elif type == "rolling" or type == "Rolling":
+	elif smoothing_method == "rolling" or smoothing_method == "Rolling":
 		for i in complex_df:
 			complex_df[i].rolling(window).mean()
 	return complex_df
@@ -28,6 +28,7 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Read file form Command line.")
 	parser.add_argument("-i", "--input", dest="filename", required=True, type=validate_file, help="input file", metavar="FILE")
 	parser.add_argument("-s", "--smoothing", required=True, help="simple or complex")
+	parser.add_argument("m", "--method", required=False, default="filter", help="filter or rolling")
 	args = parser.parse_args()
 	path = args.filename
 	if args.smoothing == "simple" or args.smoothing == "Simple":
