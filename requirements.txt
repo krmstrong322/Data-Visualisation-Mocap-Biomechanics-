@@ -1,0 +1,7 @@
+numpy
+scipy
+pandas
+more_itertools
+bokeh
+joblib
+argparse
