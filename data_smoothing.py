@@ -7,23 +7,25 @@ def get_input(input_file):
 
 
 def complex_smoothing(input_file, smoothing_method, window):
+	if window.iseven():
+		print("window size must be even")
+		return
 	complex_df = input_file
 	if smoothing_method == "filter" or smoothing_method == "Filter":
-		for i in complex_df:
-			complex_df[i] = savgol_filter(complex_df[i], window, 2)
+		complex_df.apply(lambda x: savgol_filter(x, window, 1))
 	elif smoothing_method == "rolling" or smoothing_method == "Rolling":
 		for i in complex_df:
-			complex_df[i].rolling(window).mean()
+			complex_df[i] = complex_df[i].rolling(window=window, center=False, min_periods=1).mean()
 	return complex_df
 
 
 def simple_smoothing(input_file, magnitude):
 	simple_df = input_file
-	for i in simple_df:
-		simple_df[i] = simple_df[i][::magnitude]
+	for j in simple_df:
+		simple_df[j] = simple_df[j][::magnitude]
 	return simple_df
 
-
+"""
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Read file form Command line.")
 	parser.add_argument("-i", "--input", dest="filename", required=True, type=validate_file, help="input file", metavar="FILE")
@@ -37,3 +39,18 @@ if __name__ == "__main__":
 		complex_smoothing(get_input(path), "rolling", 5).to_csv("complex_smoothing.csv")
 	else:
 		print("Smoothing selection not a valid choice")
+"""
+
+data = pd.read_csv("sit.pkl.csv")
+print(data)
+
+
+
+#new_df = complex_smoothing(data, "filter", 5).to_csv("complex_smoothing.csv")
+#test1 = pd.Series(data[1])
+#print(test1.rolling(5).mean())
+#print(savgol_filter(data[1], 5, 2))
+
+for i in data:
+	data[i] = data[i].rolling(window=5, center=False, min_periods=1).mean()
+print(data)
