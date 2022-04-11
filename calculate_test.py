@@ -69,6 +69,29 @@ def json_to_biomechanics(data):
 def Merge(dict1, dict2):
     return(dict2.update(dict1))
 
+def get_mean_df(file1, file2, file3):
+    df_1 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
+    df_2 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_2)))
+    df_3 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_3)))
+    merged = {}
+    column_names = df_1.columns.values.tolist()
+    column_names_merged = []
+    merged_df = pd.DataFrame()
+    for i in range(len(column_names)):
+        column_names_merged.insert(i, str(column_names[i]) + "_merged")
+
+    for j in column_names:
+        #temp1 = df_1[j].to_list()
+        #temp2 = df_2[j].to_list()
+        #temp3 = df_3[j].to_list()
+        dictionary_knee_flexion = {'a':list(df_1[j]),'b':list(df_2[j]),'c':list(list(df_3[j]))}
+        #print(dictionary_knee_flexion)
+        merged_tmp = {j: [mean(values) for values in zip(*dictionary_knee_flexion.values())]}
+        merged.update(merged_tmp)
+    merged = pd.DataFrame(merged)
+    merged.to_csv("")
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Read file form Command line.")
@@ -82,6 +105,7 @@ if __name__ == "__main__":
     biomechanics1 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
     biomechanics2 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_2)))
     biomechanics3 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_3)))
+    """
     dictionary_knee_flexion = {'a':list(biomechanics1['left_knee_flexion']),'b':list(biomechanics2['left_knee_flexion']),'c':list(biomechanics3['left_knee_flexion'])}
     merged = {'m': [mean(values) for values in zip(*dictionary_knee_flexion.values())]}
     print(merged)
@@ -90,7 +114,9 @@ if __name__ == "__main__":
     plt.plot(dictionary_knee_flexion['b'])
     plt.plot(dictionary_knee_flexion['c'])
     plt.plot(dictionary_knee_flexion['m'])
-    plt.show()
+    #plt.show()
+    """
+    get_mean_df(file_input_1,file_input_2,file_input_3)
     """if file_input.endswith(".json"):
     with open(file_input) as file:  # json needs to open the file first
     data = json.load(file)
