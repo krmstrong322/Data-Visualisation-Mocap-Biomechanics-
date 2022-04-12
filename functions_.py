@@ -544,9 +544,9 @@ def create_dataset_SMPL(file):
 		'right_arm_abduction': get_abduction("right", file),
 		'spine_arc': get_spine_arcs_SMPL(file),
 		'left_knee_varus': get_knee_varus("left", file),
-		'right_knee_varus': get_knee_varus("right", file),
+		#'right_knee_varus': get_knee_varus("right", file),
 		'pelvis_flexion': get_pelvis_flexion_SMPL(file),
-		'head_angle_new': get_head_angle_SMPL(file),
+		#'head_angle_new': get_head_angle_SMPL(file),
 		'shoulder_angle_new': get_shoulder_angle_new_SMPL(file)
 	})
 	return dataset
