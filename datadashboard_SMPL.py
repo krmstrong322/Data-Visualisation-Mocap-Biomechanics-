@@ -111,9 +111,10 @@ tabs = Tabs(tabs=[KneePanel, VarusValgusPanel, HipPanel, ElbowPanel,
 def upload_data1(attr, old, new):
     decoded = base64.b64decode(new)
     f = io.BytesIO(decoded)
-    data = joblib.load(f)
-    smpl_df = joints_from_smpl(data)
-    df = create_dataset_SMPL(smpl_df)
+    #data = joblib.load(f)
+    #mpl_df = joints_from_smpl(data)
+    #df = create_dataset_SMPL(smpl_df)
+    df = pd.read_csv(f)
     df.index.rename('Frame')
     df['index'] = df.index
     df = df[['index'] + [col for col in df.columns if col != 'index']]

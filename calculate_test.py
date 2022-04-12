@@ -66,46 +66,62 @@ def json_to_biomechanics(data):
 	df_pos.columns = b_index
 	return df_pos
 
-def Merge(dict1, dict2):
-    return(dict2.update(dict1))
 
 def get_mean_df(file1, file2, file3):
-    df_1 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
-    df_2 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_2)))
-    df_3 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_3)))
-    merged = {}
-    column_names = df_1.columns.values.tolist()
-    column_names_merged = []
-    merged_df = pd.DataFrame()
-    for i in range(len(column_names)):
-        column_names_merged.insert(i, str(column_names[i]) + "_merged")
+	df_1 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
+	df_2 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_2)))
+	df_3 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_3)))
+	#df_1 = df_1.apply(lambda x: savgol_filter(x, 5, 1))
+	#df_2 = df_2.apply(lambda x: savgol_filter(x, 5, 1))
+	#df_3 = df_3.apply(lambda x: savgol_filter(x, 5, 1))
+	mean_dict = {}
+	min_dict = {}
+	max_dict = {}
+	column_names = df_1.columns.values.tolist()
+	column_names_merged = []
+	merged = {}
+	for i in range(len(column_names)):
+		column_names_merged.insert(i, str(column_names[i]) + "_merged")
 
-    for j in column_names:
-        #temp1 = df_1[j].to_list()
-        #temp2 = df_2[j].to_list()
-        #temp3 = df_3[j].to_list()
-        dictionary_knee_flexion = {'a':list(df_1[j]),'b':list(df_2[j]),'c':list(list(df_3[j]))}
-        #print(dictionary_knee_flexion)
-        merged_tmp = {j: [mean(values) for values in zip(*dictionary_knee_flexion.values())]}
-        merged.update(merged_tmp)
-    merged = pd.DataFrame(merged)
-    merged.to_csv("")
+	for j in column_names:
+		# temp1 = df_1[j].to_list()
+		# temp2 = df_2[j].to_list()
+		# temp3 = df_3[j].to_list()
+		dictionary_knee_flexion = {'a': list(df_1[j]), 'b': list(df_2[j]), 'c': list(list(df_3[j]))}
+		# print(dictionary_knee_flexion)
+		mean_tmp = {j + "_mean": [mean(values) for values in zip(*dictionary_knee_flexion.values())]}
+		min_tmp = {j + "_min": [min(values) for values in zip(*dictionary_knee_flexion.values())]}
+		max_tmp = {j + "_max": [max(values) for values in zip(*dictionary_knee_flexion.values())]}
+		merged.update(mean_tmp)
+		merged.update(min_tmp)
+		merged.update(max_tmp)
+	merged_df = pd.DataFrame(merged)
+	merged_df = merged_df.apply(lambda x: savgol_filter(x, 5, 1))
+	return merged_df
+	#print(merged_df)
+	#plt.plot(merged_df['left_knee_flexion_mean'])
+	#plt.plot(merged_df['left_knee_flexion_min'])
+	#plt.plot(merged_df['left_knee_flexion_max'])
+	#plt.show()
+	# merged.to_csv("")
 
 
 if __name__ == "__main__":
-
-    parser = argparse.ArgumentParser(description="Read file form Command line.")
-    parser.add_argument("-i1", "--input1", dest="filename1", required=True, type=validate_file,help="input file", metavar="FILE")
-    parser.add_argument("-i2", "--input2", dest="filename2", required=True, type=validate_file,help="input file", metavar="FILE")
-    parser.add_argument("-i3", "--input3", dest="filename3", required=True, type=validate_file,help="input file", metavar="FILE")
-    args = parser.parse_args()
-    file_input_1 = args.filename1
-    file_input_2 = args.filename2
-    file_input_3 = args.filename3
-    biomechanics1 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
-    biomechanics2 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_2)))
-    biomechanics3 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_3)))
-    """
+	parser = argparse.ArgumentParser(description="Read file form Command line.")
+	parser.add_argument("-i1", "--input1", dest="filename1", required=True, type=validate_file, help="input file",
+	                    metavar="FILE")
+	parser.add_argument("-i2", "--input2", dest="filename2", required=True, type=validate_file, help="input file",
+	                    metavar="FILE")
+	parser.add_argument("-i3", "--input3", dest="filename3", required=True, type=validate_file, help="input file",
+	                    metavar="FILE")
+	args = parser.parse_args()
+	file_input_1 = args.filename1
+	file_input_2 = args.filename2
+	file_input_3 = args.filename3
+	biomechanics1 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
+	biomechanics2 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_2)))
+	biomechanics3 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_3)))
+	"""
     dictionary_knee_flexion = {'a':list(biomechanics1['left_knee_flexion']),'b':list(biomechanics2['left_knee_flexion']),'c':list(biomechanics3['left_knee_flexion'])}
     merged = {'m': [mean(values) for values in zip(*dictionary_knee_flexion.values())]}
     print(merged)
@@ -116,8 +132,8 @@ if __name__ == "__main__":
     plt.plot(dictionary_knee_flexion['m'])
     #plt.show()
     """
-    get_mean_df(file_input_1,file_input_2,file_input_3)
-    """if file_input.endswith(".json"):
+	get_mean_df(file_input_1, file_input_2, file_input_3).to_csv("smoothed_stats.csv")
+	"""if file_input.endswith(".json"):
     with open(file_input) as file:  # json needs to open the file first
     data = json.load(file)
     df_pos = json_to_biomechanics(data)
