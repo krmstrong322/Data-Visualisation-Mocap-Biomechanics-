@@ -114,6 +114,7 @@ if __name__ == "__main__":
 	                    metavar="FILE")
 	parser.add_argument("-i3", "--input3", dest="filename3", required=True, type=validate_file, help="input file",
 	                    metavar="FILE")
+	parser.add_argument("-o", "--output", dest="output", required=False, default="out.csv", help="output file name")
 	args = parser.parse_args()
 	file_input_1 = args.filename1
 	file_input_2 = args.filename2
@@ -132,7 +133,7 @@ if __name__ == "__main__":
     plt.plot(dictionary_knee_flexion['m'])
     #plt.show()
     """
-	get_mean_df(file_input_1, file_input_2, file_input_3).to_csv("smoothed_stats.csv")
+	get_mean_df(file_input_1, file_input_2, file_input_3).to_csv(args.output)
 	"""if file_input.endswith(".json"):
     with open(file_input) as file:  # json needs to open the file first
     data = json.load(file)

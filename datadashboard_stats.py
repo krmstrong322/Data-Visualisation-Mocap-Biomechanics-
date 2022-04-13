@@ -121,130 +121,130 @@ def upload_data1(attr, old, new):
     source.data = df
     data_table.columns = [TableColumn(field=col, title=col) for col in df.columns]
     KneeFig.line(x='index', y='left_knee_flexion_mean',
-                 color='#006BB6', legend_label='Left (Mean)',
+                 color='#001BFF', legend_label='Left (Mean)',
                  source=source, muted_alpha=0.1, name='left_knee_flexion_mean')
     KneeFig.line(x='index', y='left_knee_flexion_min',
-                 color='#006BB6', legend_label='Left (Min)',
+                 color='#FF0000', legend_label='Left (Min)',
                  source=source, muted_alpha=0.1, name='left_knee_flexion_min')
     KneeFig.line(x='index', y='left_knee_flexion_max',
-                 color='#006BB6', legend_label='Left (Max)',
+                 color='#16B200', legend_label='Left (Max)',
                  source=source, muted_alpha=0.1, name='left_knee_flexion_max')
-    KneeFig.line(x='index', y='right_knee_flexion_mean (Mean)',
-                 color='#CE1141', legend_label='Right',
+    KneeFig.line(x='index', y='right_knee_flexion_mean', muted=True,
+                 color='#001BFF', legend_label='Right (Mean)',
                  source=source, muted_alpha=0.1, name='right_knee_flexion_mean')
-    KneeFig.line(x='index', y='right_knee_flexion_min (Min)',
-                 color='#CE1141', legend_label='Right',
+    KneeFig.line(x='index', y='right_knee_flexion_min', muted=True,
+                 color='#FF0000', legend_label='Right (Min)',
                  source=source, muted_alpha=0.1, name='right_knee_flexion_min')
-    KneeFig.line(x='index', y='right_knee_flexion_max',
-                 color='#CE1141', legend_label='Right (Max)',
+    KneeFig.line(x='index', y='right_knee_flexion_max', muted=True,
+                 color='#16B200', legend_label='Right (Max)',
                  source=source, muted_alpha=0.1, name='right_knee_flexion_max')
     KneeVVFig.line(x='index', y='left_knee_varus_mean',
-                   color='#006BB6', legend_label='Left',
+                   color='#001BFF', legend_label='Left (Mean)',
                    source=source, muted_alpha=0.1, name='left_knee_varus_mean')
     KneeVVFig.line(x='index', y='left_knee_varus_min',
-                   color='#006BB6', legend_label='Left',
+                   color='#FF0000', legend_label='Left (Min)',
                    source=source, muted_alpha=0.1, name='left_knee_varus_min')
     KneeVVFig.line(x='index', y='left_knee_varus_max',
-                   color='#006BB6', legend_label='Left',
+                   color='#16B200', legend_label='Left (Max)',
                    source=source, muted_alpha=0.1, name='left_knee_varus_max')
-    KneeVVFig.line(x='index', y='right_knee_varus_mean',
-                   color='#CE1141', legend_label='Right',
+    KneeVVFig.line(x='index', y='right_knee_varus_mean', muted=True,
+                   color='#001BFF', legend_label='Right (Mean)',
                    source=source, muted_alpha=0.1, name='right_knee_varus_mean')
-    KneeVVFig.line(x='index', y='right_knee_varus_min',
-                   color='#CE1141', legend_label='Right',
+    KneeVVFig.line(x='index', y='right_knee_varus_min', muted=True,
+                   color='#FF0000', legend_label='Right (Min)',
                    source=source, muted_alpha=0.1, name='right_knee_varus_min')
-    KneeVVFig.line(x='index', y='right_knee_varus_max',
-                   color='#CE1141', legend_label='Right',
+    KneeVVFig.line(x='index', y='right_knee_varus_max', muted=True,
+                   color='#16B200', legend_label='Right (Max)',
                    source=source, muted_alpha=0.1, name='right_knee_varus_max')
     HipFig.line(x='index', y='left_hip_abduction_mean',
-                color='#006BB6', legend_label='Left',
+                color='#001BFF', legend_label='Left (Mean)',
                 source=source, muted_alpha=0.1, name='left_hip_abduction_mean')
     HipFig.line(x='index', y='left_hip_abduction_min',
-                color='#006BB6', legend_label='Left',
+                color='#FF0000', legend_label='Left (Min)',
                 source=source, muted_alpha=0.1, name='left_hip_abduction_min')
     HipFig.line(x='index', y='left_hip_abduction_max',
-                color='#006BB6', legend_label='Left',
+                color='#16B200', legend_label='Left (Max)',
                 source=source, muted_alpha=0.1, name='left_hip_abduction_max')
     HipFig.line(x='index', y='right_hip_abduction_mean',
-                color='#CE1141', legend_label='Right',
+                color='#001BFF', legend_label='Right (Mean)', muted=True,
                 source=source, muted_alpha=0.1, name='right_hip_abduction_mean')
     HipFig.line(x='index', y='right_hip_abduction_min',
-                color='#CE1141', legend_label='Right',
+                color='#FF0000', legend_label='Right (Min)', muted=True,
                 source=source, muted_alpha=0.1, name='right_hip_abduction_min')
     HipFig.line(x='index', y='right_hip_abduction_max',
-                color='#CE1141', legend_label='Right',
+                color='#16B200', legend_label='Right (Max)', muted=True,
                 source=source, muted_alpha=0.1, name='right_hip_abduction_max')
     ElbowFig.line(x='index', y='left_elbow_flexion_mean',
-                  color='#006BB6', legend_label='Left',
+                  color='#001BFF', legend_label='Left (Mean)',
                   source=source, muted_alpha=0.1, name='left_elbow_flexion_mean')
     ElbowFig.line(x='index', y='left_elbow_flexion_min',
-                  color='#006BB6', legend_label='Left',
+                  color='#FF0000', legend_label='Left (Min)',
                   source=source, muted_alpha=0.1, name='left_elbow_flexion_min')
     ElbowFig.line(x='index', y='left_elbow_flexion_max',
-                  color='#006BB6', legend_label='Left',
+                  color='#16B200', legend_label='Left (Max)',
                   source=source, muted_alpha=0.1, name='left_elbow_flexion_max')
     ElbowFig.line(x='index', y='right_elbow_flexion_mean',
-                  color='#CE1141', legend_label='Right',
+                  color='#001BFF', legend_label='Right (Mean)', muted=True,
                   source=source, muted_alpha=0.1, name='right_elbow_flexion_mean')
     ElbowFig.line(x='index', y='right_elbow_flexion_min',
-                  color='#CE1141', legend_label='Right',
+                  color='#FF0000', legend_label='Right (Min)', muted=True,
                   source=source, muted_alpha=0.1, name='right_elbow_flexion_min')
     ElbowFig.line(x='index', y='right_elbow_flexion_max',
-                  color='#CE1141', legend_label='Right',
+                  color='#16B200', legend_label='Right (Max)', muted=True,
                   source=source, muted_alpha=0.1, name='right_elbow_flexion_max')
     ArmFig.line(x='index', y='left_arm_abduction_mean',
-                color='#006BB6', legend_label='Left',
+                color='#001BFF', legend_label='Left (Mean)',
                 source=source, muted_alpha=0.1, name='left_arm_abduction_mean')
     ArmFig.line(x='index', y='left_arm_abduction_min',
-                color='#006BB6', legend_label='Left',
+                color='#FF0000', legend_label='Left (Min)',
                 source=source, muted_alpha=0.1, name='left_arm_abduction_min')
     ArmFig.line(x='index', y='left_arm_abduction_max',
-                color='#006BB6', legend_label='Left',
+                color='#16B200', legend_label='Left (Max)',
                 source=source, muted_alpha=0.1, name='left_arm_abduction_max')
     ArmFig.line(x='index', y='right_arm_abduction_mean',
-                color='#CE1141', legend_label='Right',
+                color='#001BFF', legend_label='Right (Mean)', muted=True,
                 source=source, muted_alpha=0.1, name='right_arm_abduction_mean')
     ArmFig.line(x='index', y='right_arm_abduction_min',
-                color='#CE1141', legend_label='Right',
+                color='#FF0000', legend_label='Right (Min)', muted=True,
                 source=source, muted_alpha=0.1, name='right_arm_abduction_min')
     ArmFig.line(x='index', y='right_arm_abduction_max',
-                color='#CE1141', legend_label='Right',
+                color='#16B200', legend_label='Right (Max)', muted=True,
                 source=source, muted_alpha=0.1, name='right_arm_abduction_max')
     HeadAngleFig.line(x='index', y='head_angle_new_mean',
-                      color='#CE1141', legend_label='Head Angle',
+                      color='#001BFF', legend_label='Head Angle (Mean)',
                       source=source, muted_alpha=0.1, name='head_angle_new_mean')
     HeadAngleFig.line(x='index', y='head_angle_new_min',
-                      color='#CE1141', legend_label='Head Angle',
+                      color='#FF0000', legend_label='Head Angle (Min)',
                       source=source, muted_alpha=0.1, name='head_angle_new_min')
     HeadAngleFig.line(x='index', y='head_angle_new_max',
-                      color='#CE1141', legend_label='Head Angle',
+                      color='#16B200', legend_label='Head Angle (Max)',
                       source=source, muted_alpha=0.1, name='head_angle_new_max')
     ShoulderAngleFig.line(x='index', y='shoulder_angle_new_mean',
-                          color='#CE1141', legend_label='Shoulder Angle',
+                          color='#001BFF', legend_label='Shoulder Angle (Mean)',
                           source=source, muted_alpha=0.1, name='shoulder_angle_new_mean')
     ShoulderAngleFig.line(x='index', y='shoulder_angle_new_min',
-                          color='#CE1141', legend_label='Shoulder Angle',
+                          color='#FF0000', legend_label='Shoulder Angle (Min)',
                           source=source, muted_alpha=0.1, name='shoulder_angle_new_min')
     ShoulderAngleFig.line(x='index', y='shoulder_angle_new_max',
-                          color='#CE1141', legend_label='Shoulder Angle',
+                          color='#16B200', legend_label='Shoulder Angle (Max)',
                           source=source, muted_alpha=0.1, name='shoulder_angle_new_max')
     SpineArcFig.line(x='index', y='spine_arc_mean',
-                     color='#CE1141', legend_label='Spine Arc',
+                     color='#001BFF', legend_label='Spine Arc (Mean)',
                      source=source, muted_alpha=0.1, name='spine_arc_mean')
     SpineArcFig.line(x='index', y='spine_arc_min',
-                     color='#CE1141', legend_label='Spine Arc',
+                     color='#FF0000', legend_label='Spine Arc (Min)',
                      source=source, muted_alpha=0.1, name='spine_arc_min')
     SpineArcFig.line(x='index', y='spine_arc_max',
-                     color='#CE1141', legend_label='Spine Arc',
+                     color='#16B200', legend_label='Spine Arc (Max)',
                      source=source, muted_alpha=0.1, name='spine_arc_max')
     PelvisFlexFig.line(x='index', y='pelvis_flexion_mean',
-                       color='#CE1141', legend_label='Pelvis Flexion (Mean)',
+                       color='#001BFF', legend_label='Pelvis Flexion (Mean)',
                        source=source, muted_alpha=0.1, name='pelvis_flexion_mean')
     PelvisFlexFig.line(x='index', y='pelvis_flexion_min',
-                       color='#CE1141', legend_label='Pelvis Flexion (Min)',
+                       color='#FF0000', legend_label='Pelvis Flexion (Min)',
                        source=source, muted_alpha=0.1, name='pelvis_flexion_min')
     PelvisFlexFig.line(x='index', y='pelvis_flexion_max',
-                       color='#CE1141', legend_label='Pelvis Flexion (Max)',
+                       color='#16B200', legend_label='Pelvis Flexion (Max)',
                        source=source, muted_alpha=0.1, name='pelvis_flexion_max')
 
     KneeFig.legend.location = 'top_left'
