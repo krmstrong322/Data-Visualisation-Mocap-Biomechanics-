@@ -4,9 +4,7 @@ import joblib  # you may use native pickle here as well
 import pandas as pd
 import numpy as np
 import more_itertools
-import json
 from statistics import mean
-import matplotlib.pyplot as plt
 
 b_index = ["pelvis_x", "pelvis_y", "pelvis_z", "spine_naval_x", "spine_naval_y", "spine_naval_z", "spine_chest_x",
            "spine_chest_y", "spine_chest_z", "neck_x", "neck_y", "neck_z", "clavicle_l_x",
@@ -34,8 +32,7 @@ rename_dict_OP = {6: 'shoulder_r_x', 7: 'shoulder_r_y', 8: 'shoulder_r_z',
                   33: 'ankle_r_x', 34: 'ankle_r_y', 35: 'ankle_r_z',
                   36: 'hip_l_x', 37: 'hip_l_y', 38: 'hip_l_z',
                   39: 'knee_l_x', 40: 'knee_l_y', 41: 'knee_l_z',
-                  42: 'ankle_l_x', 43: 'ankle_l_y', 44: 'ankle_l_z',
-                  }
+                  42: 'ankle_l_x', 43: 'ankle_l_y', 44: 'ankle_l_z'}
 
 
 def joints_from_smpl(input):
@@ -67,16 +64,25 @@ def json_to_biomechanics(data):
 	return df_pos
 
 
-def get_mean_df(file1, file2, file3):
-	df_1 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
-	df_2 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_2)))
-	df_3 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_3)))
-	#df_1 = df_1.apply(lambda x: savgol_filter(x, 5, 1))
-	#df_2 = df_2.apply(lambda x: savgol_filter(x, 5, 1))
-	#df_3 = df_3.apply(lambda x: savgol_filter(x, 5, 1))
+def get_mean_df(file1, file2, file3, file4=None, file5=None):
+
 	mean_dict = {}
 	min_dict = {}
 	max_dict = {}
+
+	df_1 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
+	df_1 = df_1.apply(lambda x: savgol_filter(x, 5, 1))
+	df_2 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_2)))
+	df_2 = df_2.apply(lambda x: savgol_filter(x, 5, 1))
+	df_3 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_3)))
+	df_3 = df_3.apply(lambda x: savgol_filter(x, 5, 1))
+	if file4 is not None:
+		df_4 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_4)))
+		df_4 = df_4.apply(lambda x: savgol_filter(x, 5, 1))
+	if file5 is not None:
+		df_5 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_5)))
+		df_5 = df_5.apply(lambda x: savgol_filter(x, 5, 1))
+
 	column_names = df_1.columns.values.tolist()
 	column_names_merged = []
 	merged = {}
@@ -98,13 +104,6 @@ def get_mean_df(file1, file2, file3):
 	merged_df = pd.DataFrame(merged)
 	merged_df = merged_df.apply(lambda x: savgol_filter(x, 5, 1))
 	return merged_df
-	#print(merged_df)
-	#plt.plot(merged_df['left_knee_flexion_mean'])
-	#plt.plot(merged_df['left_knee_flexion_min'])
-	#plt.plot(merged_df['left_knee_flexion_max'])
-	#plt.show()
-	# merged.to_csv("")
-
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Read file form Command line.")
@@ -114,38 +113,32 @@ if __name__ == "__main__":
 	                    metavar="FILE")
 	parser.add_argument("-i3", "--input3", dest="filename3", required=True, type=validate_file, help="input file",
 	                    metavar="FILE")
+	parser.add_argument("-i4", "--input4", dest="filename1", required=False, type=validate_file, help="input file",
+	                    metavar="FILE")
+	parser.add_argument("-i5", "--input5", dest="filename2", required=False, type=validate_file, help="input file",
+	                    metavar="FILE")
 	parser.add_argument("-o", "--output", dest="output", required=False, default="out.csv", help="output file name")
 	args = parser.parse_args()
 	file_input_1 = args.filename1
-	file_input_2 = args.filename2
-	file_input_3 = args.filename3
 	biomechanics1 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
+	file_input_2 = args.filename2
 	biomechanics2 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_2)))
+	file_input_3 = args.filename3
 	biomechanics3 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_3)))
-	"""
-    dictionary_knee_flexion = {'a':list(biomechanics1['left_knee_flexion']),'b':list(biomechanics2['left_knee_flexion']),'c':list(biomechanics3['left_knee_flexion'])}
-    merged = {'m': [mean(values) for values in zip(*dictionary_knee_flexion.values())]}
-    print(merged)
-    Merge(merged,dictionary_knee_flexion)
-    plt.plot(dictionary_knee_flexion['a'])
-    plt.plot(dictionary_knee_flexion['b'])
-    plt.plot(dictionary_knee_flexion['c'])
-    plt.plot(dictionary_knee_flexion['m'])
-    #plt.show()
-    """
-	get_mean_df(file_input_1, file_input_2, file_input_3).to_csv(args.output)
-	"""if file_input.endswith(".json"):
-    with open(file_input) as file:  # json needs to open the file first
-    data = json.load(file)
-    df_pos = json_to_biomechanics(data)
-    df_pos.to_csv("dataframe.csv")
-    biomechanics = create_dataset(df_pos)  # calculate biomechanics from joint positions
-    biomechanics.to_csv((str(args.filename) + ".csv"), index=False)
-    print("done")
 
-    elif file_input.endswith(".pkl"):  # logic for pkl file (from SMPL)
-    biomechanics = create_dataset_SMPL(
-    joints_from_smpl(joblib.load(file_input)))  # calculate biomechanics from joint positions
-    biomechanics.to_csv((str(args.filename) + ".csv"), index=False)
-    print("done")
-    """
+	if args.filename4 is not None:
+		file_input_4 = args.filename4
+		biomechanics4 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
+
+	if args.filename5 is not None:
+		file_input_5 = args.filename5
+		biomechanics5 = create_dataset_SMPL(joints_from_smpl(joblib.load(file_input_1)))
+
+	if args.filename5 is not None and args.filename4 is not None:
+		file_input_5 = args.filename5
+		file_input_4 = args.filename4
+		get_mean_df(file_input_1, file_input_2, file_input_3, file_input_4, file_input_5).to_csv(args.output)
+
+	elif args.filename5 is None and args.filename4 is None:
+		get_mean_df(file_input_1, file_input_2, file_input_3).to_csv(args.output)
+
