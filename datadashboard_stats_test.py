@@ -16,8 +16,8 @@ df2 = pd.DataFrame()
 source2 = ColumnDataSource(df)
 columns2 = [TableColumn(field=col, title=col) for col in df.columns]
 
-file_input1 = FileInput(accept='.csv, .json, .pkl', width=800)
-file_input2 = FileInput(accept='.csv, .json, .pkl', width=800)
+file_input1 = FileInput(accept='.csv, .json, .pkl', sizing_mode= "scale_width")
+file_input2 = FileInput(accept='.csv, .json, .pkl', sizing_mode= "scale_width")
 
 # Specify the selection tools to be made available
 hover = HoverTool(tooltips=[('Line', '$name')])
@@ -26,75 +26,83 @@ select_tools = ['box_select', 'lasso_select', 'poly_select', 'tap', 'pan', 'whee
 # Create Figures
 KneeFig = figure(
     title='Knee Flexion',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Flexion (degrees)',
     toolbar_location='below',
+	sizing_mode= "scale_both",
     tools=select_tools)
 
 KneeVVFig = figure(
     title='Knee Varus/Valgus',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Varus/Valgus (degrees)',
     toolbar_location='below',
+	sizing_mode= "scale_both",
     tools=select_tools)
 
 HipFig = figure(
     title='Hip Abduction',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Abduction (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 ElbowFig = figure(
     title='Elbow Flexion',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Flexion (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 ArmFig = figure(
     title='Arm Abduction',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Abduction (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 HeadAngleFig = figure(
     title='Head Tilt',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Tilt (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 ShoulderAngleFig = figure(
     title='Shoulder Tilt',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Tilt (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 SpineArcFig = figure(
     title='Spine Arc',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Spine Arc (degrees)',
     toolbar_location='below',
-    tools=select_tools)
-
+	sizing_mode="scale_both",
+	tools=select_tools)
 PelvisFlexFig = figure(
     title='Pelvis Flexion',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Pelvis Flexion (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 # Create Panels
 KneePanel = Panel(child=KneeFig, title='Knee Flexion')
@@ -114,75 +122,84 @@ tabs = Tabs(tabs=[KneePanel, VarusValgusPanel, HipPanel, ElbowPanel,
 
 KneeFig2 = figure(
     title='Knee Flexion',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Flexion (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 KneeVVFig2 = figure(
     title='Knee Varus/Valgus',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Varus/Valgus (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 HipFig2 = figure(
     title='Hip Abduction',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Abduction (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 ElbowFig2 = figure(
     title='Elbow Flexion',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Flexion (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 ArmFig2 = figure(
     title='Arm Abduction',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Abduction (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 HeadAngleFig2 = figure(
     title='Head Tilt',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Tilt (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 ShoulderAngleFig2 = figure(
     title='Shoulder Tilt',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Tilt (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 SpineArcFig2 = figure(
     title='Spine Arc',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Spine Arc (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 PelvisFlexFig2 = figure(
     title='Pelvis Flexion',
-    plot_height=800, plot_width=800,
+    #plot_height=900, plot_width=900,
     x_axis_label='Frame',
     y_axis_label='Pelvis Flexion (degrees)',
     toolbar_location='below',
-    tools=select_tools)
+	sizing_mode="scale_both",
+	tools=select_tools)
 
 # Create Panels
 KneePanel2 = Panel(child=KneeFig2, title='Knee Flexion')
@@ -521,7 +538,7 @@ file_input1.on_change('value', upload_data1)
 file_input2.on_change('value', upload_data2)
 #data_table = DataTable(source=source, columns=columns, width=1600, height=300)
 # curdoc().theme = 'dark_minimal'
-curdoc().add_root(row(children=[column(file_input1, tabs), column(file_input2, tabs2)]))
+curdoc().add_root(row(children=[column(file_input1, tabs), column(file_input2, tabs2)],sizing_mode = 'stretch_both'))
 
 # Determine where the visualization will be rendered
 # output_file('filename.html', title='Patient Biomechanics')  # Render to static HTML, or
