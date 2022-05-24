@@ -113,9 +113,9 @@ if __name__ == "__main__":
 	                    metavar="FILE")
 	parser.add_argument("-i3", "--input3", dest="filename3", required=True, type=validate_file, help="input file",
 	                    metavar="FILE")
-	parser.add_argument("-i4", "--input4", dest="filename1", required=False, type=validate_file, help="input file",
+	parser.add_argument("-i4", "--input4", dest="filename4", required=False, type=validate_file, help="input file",
 	                    metavar="FILE")
-	parser.add_argument("-i5", "--input5", dest="filename2", required=False, type=validate_file, help="input file",
+	parser.add_argument("-i5", "--input5", dest="filename5", required=False, type=validate_file, help="input file",
 	                    metavar="FILE")
 	parser.add_argument("-o", "--output", dest="output", required=False, default="out.csv", help="output file name")
 	args = parser.parse_args()

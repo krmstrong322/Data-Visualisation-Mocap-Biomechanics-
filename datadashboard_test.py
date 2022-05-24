@@ -187,9 +187,4 @@ data_table = DataTable(source=source, columns=columns, width=1600, height=300)
 # curdoc().theme = 'dark_minimal'
 curdoc().add_root(column(file_input, tabs, data_table))
 
-# Determine where the visualization will be rendered
-# output_file('filename.html', title='Patient Biomechanics')  # Render to static HTML, or
-# output_notebook()  # Render inline in a Jupyter Notebook
 
-
-# Widget
