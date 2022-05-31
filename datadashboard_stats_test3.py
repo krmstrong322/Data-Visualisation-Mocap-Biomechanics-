@@ -3,7 +3,7 @@ import base64
 from bokeh.io import curdoc
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, DataTable, TableColumn, HoverTool
-from bokeh.layouts import column, row
+from bokeh.layouts import column, row, gridplot, layout
 from bokeh.models.widgets import Tabs, Panel, FileInput
 from functions_ import *
 import joblib
@@ -234,81 +234,81 @@ def upload_data1(attr, old, new):
                  color='#001BFF', legend_label='Left (Mean)',
                  source=source, muted_alpha=0.1, name='left_knee_flexion_mean')
     KneeFig.varea(x='index', y1='left_knee_flexion_min', y2='left_knee_flexion_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     KneeFig2.line(x='index', y='right_knee_flexion_mean',
-                 color='#001BFF', legend_label='Left (Mean)',
+                 color='#001BFF', legend_label='Right (Mean)',
                  source=source, muted_alpha=0.1, name='right_knee_flexion_mean')
     KneeFig2.varea(x='index', y1='right_knee_flexion_min', y2='right_knee_flexion_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     KneeVVFig.line(x='index', y='left_knee_varus_mean',
                    color='#001BFF', legend_label='Left (Mean)',
                    source=source, muted_alpha=0.1, name='left_knee_varus_mean')
     KneeVVFig.varea(x='index', y1='left_knee_varus_min', y2='left_knee_varus_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
     KneeVVFig2.line(x='index', y='right_knee_varus_mean', muted=False,
                    color='#001BFF', legend_label='Right (Mean)',
                    source=source, muted_alpha=0.1, name='right_knee_varus_mean')
     KneeVVFig2.varea(x='index', y1='right_knee_varus_min', y2='right_knee_varus_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     HipFig.line(x='index', y='left_hip_abduction_mean',
                 color='#001BFF', legend_label='Left (Mean)',
                 source=source, muted_alpha=0.1, name='left_hip_abduction_mean')
     HipFig.varea(x='index', y1='left_hip_abduction_min', y2='left_hip_abduction_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
     HipFig2.line(x='index', y='right_hip_abduction_mean',
                 color='#001BFF', legend_label='Right (Mean)', muted=False,
                 source=source, muted_alpha=0.1, name='right_hip_abduction_mean')
     HipFig2.varea(x='index', y1='right_hip_abduction_min', y2='right_hip_abduction_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     ElbowFig.line(x='index', y='left_elbow_flexion_mean',
                   color='#001BFF', legend_label='Left (Mean)',
                   source=source, muted_alpha=0.1, name='left_elbow_flexion_mean')
-    ElbowFig.varea(x='index', y1='right_hip_abduction_min', y2='right_hip_abduction_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+    ElbowFig.varea(x='index', y1='left_elbow_flexion_min', y2='left_elbow_flexion_max', source=source,
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
     ElbowFig2.line(x='index', y='right_elbow_flexion_mean',
                   color='#001BFF', legend_label='Right (Mean)', muted=False,
                   source=source, muted_alpha=0.1, name='right_elbow_flexion_mean')
     ElbowFig2.varea(x='index', y1='right_elbow_flexion_min', y2='right_elbow_flexion_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     ArmFig.line(x='index', y='left_arm_abduction_mean',
                 color='#001BFF', legend_label='Left (Mean)',
                 source=source, muted_alpha=0.1, name='left_arm_abduction_mean')
     ArmFig.varea(x='index', y1='left_arm_abduction_min', y2='left_arm_abduction_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
-    ArmFig.line(x='index', y='right_arm_abduction_mean',
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
+    ArmFig2.line(x='index', y='right_arm_abduction_mean',
                 color='#001BFF', legend_label='Right (Mean)', muted=False,
                 source=source, muted_alpha=0.1, name='right_arm_abduction_mean')
     ArmFig2.varea(x='index', y1='right_arm_abduction_min', y2='right_arm_abduction_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     HeadAngleFig.line(x='index', y='head_angle_new_mean',
                       color='#001BFF', legend_label='Head Angle (Mean)',
                       source=source, muted_alpha=0.1, name='head_angle_new_mean')
     HeadAngleFig.varea(x='index', y1='head_angle_new_min', y2='head_angle_new_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     ShoulderAngleFig.line(x='index', y='shoulder_angle_new_mean',
                           color='#001BFF', legend_label='Shoulder Angle (Mean)',
                           source=source, muted_alpha=0.1, name='shoulder_angle_new_mean')
     ShoulderAngleFig.varea(x='index', y1='shoulder_angle_new_min', y2='shoulder_angle_new_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     SpineArcFig.line(x='index', y='spine_arc_mean',
                      color='#001BFF', legend_label='Spine Arc (Mean)',
                      source=source, muted_alpha=0.1, name='spine_arc_mean')
     SpineArcFig.varea(x='index', y1='spine_arc_min', y2='spine_arc_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     PelvisFlexFig.line(x='index', y='pelvis_flexion_mean',
                        color='#001BFF', legend_label='Pelvis Flexion (Mean)',
                        source=source, muted_alpha=0.1, name='pelvis_flexion_mean')
     PelvisFlexFig.varea(x='index', y1='pelvis_flexion_min', y2='pelvis_flexion_max', source=source,
-                  fill_alpha=0.1, fill_color='chartreuse', legend_label="area")
+                  fill_alpha=0.1, fill_color='chartreuse', legend_label="Range of Motion")
 
     KneeFig.legend.location = 'top_left'
     KneeVVFig.legend.location = 'top_left'
@@ -353,8 +353,10 @@ file_input1.on_change('value', upload_data1)
 
 #data_table = DataTable(source=source, columns=columns, width=1600, height=300)
 # curdoc().theme = 'dark_minimal'
-#grid = gridplot()
-curdoc().add_root(row(children=[column(file_input1), column(left_tabs), column(right_tabs), column(middle_tabs)]))
+
+curdoc().add_root(column(file_input1, row(children=[column(left_tabs), column(right_tabs), column(middle_tabs)])))
+
+#curdoc().add_root(row(children=[column(file_input1), column(left_tabs), column(right_tabs), column(middle_tabs)]))
 
 # Determine where the visualization will be rendered
 # output_file('filename.html', title='Patient Biomechanics')  # Render to static HTML, or
