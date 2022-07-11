@@ -211,10 +211,14 @@ def calculate_head_angle_new_SMPL(data, frame):
 	no_h = distance.euclidean(nose, head)
 	no_ne = distance.euclidean(nose, neck)
 	h_ne = distance.euclidean(head, neck)
-	head_angle = math.degrees(math.acos((no_h ** 2 + no_ne ** 2 - h_ne ** 2)/(2 * no_h * no_ne)))
-	if er_sr > el_sl:
-		head_angle = -abs(head_angle)
-	return head_angle
+	try:
+		head_angle = math.degrees(math.acos((no_h ** 2 + no_ne ** 2 - h_ne ** 2)/(2 * no_h * no_ne)))
+		if er_sr > el_sl:
+			head_angle = -abs(head_angle)
+		return head_angle
+	except ValueError:
+		print("error")
+		return
 
 def get_head_angles(data):
 	head_tilt = []
@@ -453,12 +457,16 @@ def calculate_knee_varus(data, frame, side):
 		rh_rk = distance.euclidean(r_hip,r_knee)
 		rh_ra = distance.euclidean(r_hip,r_ankle)
 		rk_ra = distance.euclidean(r_knee,r_ankle)
-		r_k_varus = (math.degrees(math.acos((rh_rk ** 2 + rk_ra ** 2 - rh_ra ** 2) / (2 * rh_rk * rk_ra))))
-		if r_knee[1] > r_ankle[1]:
-			r_k_varus = -abs(r_k_varus)
-		if r_knee[1] < r_ankle[1]:
-			r_k_varus = abs(r_k_varus)
-		return r_k_varus
+		try:
+			r_k_varus = (math.degrees(math.acos((rh_rk ** 2 + rk_ra ** 2 - rh_ra ** 2) / (2 * rh_rk * rk_ra))))
+			if r_knee[1] > r_ankle[1]:
+				r_k_varus = -abs(r_k_varus)
+			if r_knee[1] < r_ankle[1]:
+				r_k_varus = abs(r_k_varus)
+			return r_k_varus
+		except ValueError:
+			print("error")
+			return
 
 def get_knee_varus(side,file):
 	if side == 'left':
