@@ -67,9 +67,11 @@ def get_right_knee(frame, data):
 	HA = distance.euclidean(joint1, joint3)  # distance between hip and ankle
 	HK = distance.euclidean(joint1, joint2)  # distance between hip and knee
 	KA = distance.euclidean(joint2, joint3)  # distance between knee and ankle
-	knee_angle_right = (math.degrees(math.acos((HK ** 2 + KA ** 2 - HA ** 2) / (2.0 * HK * KA))))  # use cosine rule
-	return knee_angle_right
-
+	try:
+		knee_angle_right = (math.degrees(math.acos((HK ** 2 + KA ** 2 - HA ** 2) / (2.0 * HK * KA))))  # use cosine rule
+		return knee_angle_right
+	except ValueError:
+		return
 
 def get_left_knee(frame, data):  # calcualtes the knee angle using trig, for the left or right knee at time t
 	joint1 = [data.iloc[frame]['hip_r_x'], data.iloc[frame]['hip_r_y'], data.iloc[frame]['hip_r_z']]
@@ -78,9 +80,11 @@ def get_left_knee(frame, data):  # calcualtes the knee angle using trig, for the
 	HA = distance.euclidean(joint1, joint3)  # distance between hip and ankle
 	HK = distance.euclidean(joint1, joint2)  # distance between hip and knee
 	KA = distance.euclidean(joint2, joint3)  # distance between knee and ankle
-	knee_angle_left = (math.degrees(math.acos((HK ** 2 + KA ** 2 - HA ** 2) / (2.0 * HK * KA))))  # use cosine rule
-	return knee_angle_left
-
+	try:
+		knee_angle_left = (math.degrees(math.acos((HK ** 2 + KA ** 2 - HA ** 2) / (2.0 * HK * KA))))  # use cosine rule
+		return knee_angle_left
+	except ValueError:
+		return
 
 ### REWRITE THIS FUNCTION
 def get_velocity(frame_n, frame_m, joint, data):  # calcualtes the average velocity between two time points from a dataframe
@@ -123,9 +127,11 @@ def get_left_hip(frame, data):
 	PA = distance.euclidean(joint1, joint2)
 	PF = distance.euclidean(joint1, joint3)
 	AF = distance.euclidean(joint2, joint3)
-	hip_angle_left = (math.degrees(math.acos((PA ** 2 + AF ** 2 - PF ** 2) / (2.0 * PA * AF))))
-	return hip_angle_left
-
+	try:
+		hip_angle_left = (math.degrees(math.acos((PA ** 2 + AF ** 2 - PF ** 2) / (2.0 * PA * AF))))
+		return hip_angle_left
+	except ValueError:
+		return
 
 def get_right_hip(frame, data):
 	joint1 = [data.iloc[frame]['pelvis_x'], data.iloc[frame]['pelvis_y'], data.iloc[frame]['pelvis_z']]
@@ -134,9 +140,11 @@ def get_right_hip(frame, data):
 	PA = distance.euclidean(joint1, joint2)
 	PF = distance.euclidean(joint1, joint3)
 	AF = distance.euclidean(joint2, joint3)
-	hip_angle_right = (math.degrees(math.acos((PA ** 2 + AF ** 2 - PF ** 2) / (2.0 * PA * AF))))
-	return hip_angle_right
-
+	try:
+		hip_angle_right = (math.degrees(math.acos((PA ** 2 + AF ** 2 - PF ** 2) / (2.0 * PA * AF))))
+		return hip_angle_right
+	except ValueError:
+		return
 
 def get_flexion(side, file):
 	if side == 'left':
@@ -351,8 +359,11 @@ def spine_arc_SMPL(data, frame):
 	TM = distance.euclidean(top_spine, mid_spine)
 	ML = distance.euclidean(mid_spine, lower_spine)
 	TL = distance.euclidean(top_spine, lower_spine)
-	spine_angle = (math.degrees(math.acos((ML ** 2 + TM ** 2 - TL ** 2) / (2.0 * ML * TM))))
-	return spine_angle
+	try:
+		spine_angle = (math.degrees(math.acos((ML ** 2 + TM ** 2 - TL ** 2) / (2.0 * ML * TM))))
+		return spine_angle
+	except ValueError:
+		return
 
 def get_spine_arcs(file):
 	spine = []
@@ -373,9 +384,11 @@ def l_elbow_flexion(data, frame):
 	LSE_flex = distance.euclidean(LS_flex, LE_flex)
 	LEW_flex = distance.euclidean(LE_flex, LW_flex)
 	LSW_flex = distance.euclidean(LS_flex, LW_flex)
-	l_e_flex = (math.degrees(math.acos((LEW_flex ** 2 + LSE_flex ** 2 - LSW_flex ** 2) / (2.0 * LEW_flex * LSE_flex))))
-	return l_e_flex
-
+	try:
+		l_e_flex = (math.degrees(math.acos((LEW_flex ** 2 + LSE_flex ** 2 - LSW_flex ** 2) / (2.0 * LEW_flex * LSE_flex))))
+		return l_e_flex
+	except ValueError:
+		return
 
 def r_elbow_flexion(data, frame):
 	RS_flex = [data.iloc[frame]['shoulder_r_x']], [data.iloc[frame]['shoulder_r_y']], [data.iloc[frame]['shoulder_r_z']]
@@ -384,9 +397,11 @@ def r_elbow_flexion(data, frame):
 	RSE_flex = distance.euclidean(RS_flex, RE_flex)
 	REW_flex = distance.euclidean(RE_flex, RW_flex)
 	RSW_flex = distance.euclidean(RS_flex, RW_flex)
-	r_e_flex = (math.degrees(math.acos((REW_flex ** 2 + RSE_flex ** 2 - RSW_flex ** 2) / (2.0 * REW_flex * RSE_flex))))
-	return r_e_flex
-
+	try:
+		r_e_flex = (math.degrees(math.acos((REW_flex ** 2 + RSE_flex ** 2 - RSW_flex ** 2) / (2.0 * REW_flex * RSE_flex))))
+		return r_e_flex
+	except ValueError:
+		return
 
 def get_elbow_flexion(side, file):
 	if side == 'left':
@@ -408,9 +423,11 @@ def l_arm_abduction(data, frame):
 	LSW_abd = distance.euclidean(LS_abd, LW_abd)
 	LWH_abd = distance.euclidean(LW_abd, LH_abd)
 	LSH_abd = distance.euclidean(LS_abd, LH_abd)
-	l_arm_abd = (math.degrees(math.acos((LSH_abd ** 2 + LSW_abd ** 2 - LWH_abd ** 2) / (2.0 * LSH_abd * LSW_abd))))
-	return l_arm_abd
-
+	try:
+		l_arm_abd = (math.degrees(math.acos((LSH_abd ** 2 + LSW_abd ** 2 - LWH_abd ** 2) / (2.0 * LSH_abd * LSW_abd))))
+		return l_arm_abd
+	except ValueError:
+		return
 
 def r_arm_abduction(data, frame):
 	RS_abd = [data.iloc[frame]['shoulder_r_x']], [data.iloc[frame]['shoulder_r_y']], [data.iloc[frame]['shoulder_r_z']]
@@ -419,8 +436,11 @@ def r_arm_abduction(data, frame):
 	RSW_abd = distance.euclidean(RS_abd, RW_abd)
 	RWH_abd = distance.euclidean(RW_abd, RH_abd)
 	RSH_abd = distance.euclidean(RS_abd, RH_abd)
-	r_arm_abd = (math.degrees(math.acos((RSH_abd ** 2 + RSW_abd ** 2 - RWH_abd ** 2) / (2.0 * RSH_abd * RSW_abd))))
-	return r_arm_abd
+	try:
+		r_arm_abd = (math.degrees(math.acos((RSH_abd ** 2 + RSW_abd ** 2 - RWH_abd ** 2) / (2.0 * RSH_abd * RSW_abd))))
+		return r_arm_abd
+	except ValueError:
+		return
 
 
 def get_arm_abduction(side, file):
@@ -507,8 +527,11 @@ def calculate_pelvis_flexion_SMPL(data, frame):
 	C_N = distance.euclidean(chest, naval)
 	C_P = distance.euclidean(chest, pelvis)
 	N_P = distance.euclidean(naval, pelvis)
-	pelvis_flexion = (math.degrees(math.acos((N_P ** 2 + C_P ** 2 - C_N ** 2)/(2 * N_P * C_P))))
-	return pelvis_flexion
+	try:
+		pelvis_flexion = (math.degrees(math.acos((N_P ** 2 + C_P ** 2 - C_N ** 2)/(2 * N_P * C_P))))
+		return pelvis_flexion
+	except ValueError:
+		return
 
 def get_pelvis_flexion(file):
 	pelvis_flex = []
