@@ -105,6 +105,9 @@ def get_mean_df(file1, file2, file3, file4=None, file5=None):
 	merged_df = merged_df.apply(lambda x: savgol_filter(x, 5, 1))
 	return merged_df
 
+def work_done(input):
+	data = input
+
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Read file form Command line.")
 	parser.add_argument("-i1", "--input1", dest="filename1", required=True, type=validate_file, help="input file",
