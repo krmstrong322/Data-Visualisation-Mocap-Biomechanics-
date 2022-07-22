@@ -94,6 +94,7 @@ SpineArcFig = figure(
     toolbar_location='below',
 	sizing_mode="scale_both",
 	tools=select_tools)
+
 PelvisFlexFig = figure(
     title='Pelvis Flexion',
     #plot_height=900, plot_width=900,
@@ -238,6 +239,8 @@ def upload_data1(attr, old, new):
                  source=source, muted_alpha=0.1, name='left_knee_flexion_mean')
     KneeFig.varea(x='index', y1='left_knee_flexion_min', y2='left_knee_flexion_max', source=source,
                   fill_alpha=0.5, fill_color='#6495ED', legend_label="Range of Motion")
+    KneeFig.varea(x='index', y1='right_knee_flexion_min', y2='right_knee_flexion_max', source=source,
+                  fill_alpha=0.5, fill_color='chartreuse', legend_label="Range of Motion")
 
     KneeFig2.line(x='index', y='right_knee_flexion_mean',
                  color='#00FF00', legend_label='Right (Mean)',
