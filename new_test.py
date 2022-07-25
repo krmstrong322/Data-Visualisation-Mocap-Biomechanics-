@@ -101,14 +101,23 @@ source = ColumnDataSource(biomechanics_df)
 columns = [TableColumn(field=col, title=col) for col in biomechanics_df.columns]
 
 # Create Figures
+"""
+Always show 0 for Flexion/Extension Graph
+Annotate Graph with which areas are Flexion and which areas are Extension
+
+"""
 KneeFig = figure(
     title='Knee Flexion',
     plot_height=720, plot_width=1280,
     x_axis_label='Frame',
     y_axis_label='Flexion (degrees)',
     toolbar_location='below')
+    #y_range=(-10,100)
     #sizing_mode= "scale_both")
-
+KneeFig.yaxis.axis_label_standoff=15
+KneeFig.yaxis.axis_label_text_font_size="15pt"
+KneeFig.xaxis.axis_label_text_font_size="15pt"
+KneeFig.yaxis.major_label_text_font_size="15pt"
 KneeVVFig = figure(
     title='Knee Varus/Valgus',
     plot_height=720, plot_width=1280,
@@ -274,14 +283,14 @@ class PDF(FPDF):
         # Arial bold 15
         self.set_font('Arial', 'B', 15)
         # Move to the right
-        self.cell(80)
+        #self.cell(80)
         # Title
-        self.cell(30, 10, 'Biomechanics Report', 0, 0, 'C')
-        self.ln(10)
-        self.cell(60)
-        self.cell(26, 10, args.pid , 0, 0, 'C')
+        self.text(70, 15, 'Biomechanics Report')
+        #self.ln(10)
+        #self.cell(60)
+        self.text(70, 25, args.pid)
         # Line break
-        self.ln(50)
+        #self.ln(50)
 
     # Page footer
     def footer(self):
@@ -302,6 +311,12 @@ if mean(biomechanics_df['left_knee_varus_mean'][:100]) and mean(biomechanics_df[
     vv_alignment = "Valgus"
 elif mean(biomechanics_df['left_knee_varus_mean'][:100]) and mean(biomechanics_df['right_knee_varus_mean']) > 0:
     vv_alignment = "Varus"
+l_ext = None
+r_ext = None
+if min(biomechanics_df['left_knee_flexion_mean']) > 0:
+    l_ext = "The left knee never goes to true extension"
+if min(biomechanics_df['right_knee_flexion_mean']) > 0:
+    r_ext = "the right knee never goes to true extension"
 
 # Instantiation of inherited class
 pdf = PDF()
@@ -309,16 +324,19 @@ pdf.alias_nb_pages()
 pdf.add_page()
 pdf.set_font('Times', '', 10)
 pdf.image("KneeFig.png", x= 40, y=40,  link='', type='', w=120, h=90)
-pdf.text(30, 140, "Knee Flexion shows the left knee work done is: {0:0.2f} and right knee of: {1:0.2f}".format(l_f_wd, r_f_wd))
+pdf.text(30, 135, "Knee Flexion shows the left knee work done is: {0:0.2f} and right knee of: {1:0.2f}".format(l_f_wd, r_f_wd))
 if l_f_wd > r_f_wd:
-    pdf.text(30,145, "this shows that there is a difference of {0:0.2f} favouring the left side".format(l_f_wd-r_f_wd))
+    pdf.text(30,140, "this shows that there is a difference of {0:0.2f} favouring the left side".format(l_f_wd-r_f_wd))
 elif r_f_wd > l_f_wd:
-    pdf.text(30,145, "this shows that there is a difference of {0:0.2f} favouring the left side".format(r_f_wd-l_f_wd))
-pdf.text(30,150, "The average range of motion on the left side is: {0:0.2f}° and right side: {1:0.2f}°".format(l_f_rom, r_f_rom))
+    pdf.text(30,140, "this shows that there is a difference of {0:0.2f} favouring the left side".format(r_f_wd-l_f_wd))
+pdf.text(30,145, "The average range of motion on the left side is: {0:0.2f}° and right side: {1:0.2f}°".format(l_f_rom, r_f_rom))
 if l_f_wd > r_f_wd:
-    pdf.text(30,155, "this shows that there is a difference of {0:0.2f}° favouring the left side".format(l_f_rom-r_f_rom))
+    pdf.text(30,150, "this shows that there is a difference of {0:0.2f}° favouring the left side".format(l_f_rom-r_f_rom))
 elif r_f_wd > l_f_wd:
-    pdf.text(30,155, "this shows that there is a difference of {0:0.2f}° favouring the left side".format(r_f_rom-l_f_rom))
+    pdf.text(30,150, "this shows that there is a difference of {0:0.2f}° favouring the left side".format(r_f_rom-l_f_rom))
+if l_ext is not None and r_ext is not None:
+    pdf.text(30,155, "{0} and {1}.".format(l_ext, r_ext))
+
 pdf.image("KneeVVFig.png", x= 40, y=160,  link='', type='', w=120, h=90)
 pdf.text(30, 260, "Knee Varus/Valgus shows a natrual {0} alignment".format(vv_alignment))
 pdf.add_page()

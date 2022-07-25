@@ -117,6 +117,18 @@ def get_left_knee(frame, data):  # calcualtes the knee angle using trig, for the
 	except ValueError:
 		return
 
+def get_flexion(side, file):
+	if side == 'left':
+		left_flexion = []
+		for i in range(len(file)):
+			left_flexion.append(180 - (get_left_knee(i, file)))
+		return left_flexion
+	if side == 'right':
+		right_flexion = []
+		for i in range(len(file)):
+			right_flexion.append(180 - (get_right_knee(i, file)))
+		return right_flexion
+
 ### REWRITE THIS FUNCTION
 def get_velocity(frame_n, frame_m, joint, data):  # calcualtes the average velocity between two time points from a dataframe
 	joint_x = ''.join((joint, '_x'))
@@ -177,17 +189,7 @@ def get_right_hip(frame, data):
 	except ValueError:
 		return
 
-def get_flexion(side, file):
-	if side == 'left':
-		left_flexion = []
-		for i in range(len(file)):
-			left_flexion.append(180 - (get_left_knee(i, file)))
-		return left_flexion
-	if side == 'right':
-		right_flexion = []
-		for i in range(len(file)):
-			right_flexion.append(180 - (get_right_knee(i, file)))
-		return right_flexion
+
 
 
 def get_abduction(side, file):
