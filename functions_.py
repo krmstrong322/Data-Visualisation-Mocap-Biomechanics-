@@ -495,12 +495,12 @@ def calculate_knee_varus(data, frame, side):
 		lh_lp = distance.euclidean(l_hip,l_pelvis)
 		lk_lp = distance.euclidean(l_knee,l_pelvis)
 		l_k_varus = (math.degrees(math.acos((lh_lk ** 2 + lk_lp ** 2 - lh_lp ** 2) / (2 * lh_lk * lk_lp))))
-		"""
-		if l_knee[0] < l_ankle[0]:
-			l_k_varus = abs(l_k_varus)
-		elif l_knee[0] > l_ankle[0]:
+
+		if l_knee[0] < l_hip[0]:
 			l_k_varus = -abs(l_k_varus)
-		"""
+		elif l_knee[0] > l_hip[0]:
+			l_k_varus = abs(l_k_varus)
+
 		return l_k_varus
 
 	if side == 'right':
@@ -512,12 +512,12 @@ def calculate_knee_varus(data, frame, side):
 		rk_rp = distance.euclidean(r_knee,r_pelvis)
 		try:
 			r_k_varus = (math.degrees(math.acos((rh_rk ** 2 + rk_rp ** 2 - rh_rp ** 2) / (2 * rh_rk * rk_rp))))
-			"""
-			if r_knee[0] > r_ankle[0]:
+
+			if r_knee[0] > r_hip[0]:
 				r_k_varus = -abs(r_k_varus)
-			if r_knee[0] < r_ankle[0]:
+			if r_knee[0] < r_hip[0]:
 				r_k_varus = abs(r_k_varus)
-			"""
+
 			return r_k_varus
 		except ValueError:
 			print("error")

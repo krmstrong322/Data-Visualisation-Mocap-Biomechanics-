@@ -279,7 +279,7 @@ class PDF(FPDF):
         self.cell(30, 10, 'Biomechanics Report', 0, 0, 'C')
         self.ln(10)
         self.cell(60)
-        self.cell(30, 10, args.pid , 0, 0, 'C')
+        self.cell(26, 10, args.pid , 0, 0, 'C')
         # Line break
         self.ln(50)
 
@@ -297,6 +297,11 @@ l_f_wd = work_done(biomechanics_df, 'left_knee_flexion_mean')
 r_f_wd = work_done(biomechanics_df, 'right_knee_flexion_mean')
 l_f_rom = max(biomechanics_df['left_knee_flexion_mean']) - min(biomechanics_df['left_knee_flexion_mean'])
 r_f_rom = max(biomechanics_df['right_knee_flexion_mean']) - min(biomechanics_df['right_knee_flexion_mean'])
+vv_alignment = None
+if mean(biomechanics_df['left_knee_varus_mean'][:100]) and mean(biomechanics_df['right_knee_varus_mean']) < 0:
+    vv_alignment = "Valgus"
+elif mean(biomechanics_df['left_knee_varus_mean'][:100]) and mean(biomechanics_df['right_knee_varus_mean']) > 0:
+    vv_alignment = "Varus"
 
 # Instantiation of inherited class
 pdf = PDF()
@@ -315,7 +320,7 @@ if l_f_wd > r_f_wd:
 elif r_f_wd > l_f_wd:
     pdf.text(30,155, "this shows that there is a difference of {0:0.2f}° favouring the left side".format(r_f_rom-l_f_rom))
 pdf.image("KneeVVFig.png", x= 40, y=160,  link='', type='', w=120, h=90)
-pdf.text(30, 260, "Knee Varus/Valgus shows a natrual  ")
+pdf.text(30, 260, "Knee Varus/Valgus shows a natrual {0} alignment".format(vv_alignment))
 pdf.add_page()
 pdf.image("HipFig.png", x= 40, y=40,  link='', type='', w=120, h=90)
 pdf.text(30, 140, "Hip Abduction shows...")
